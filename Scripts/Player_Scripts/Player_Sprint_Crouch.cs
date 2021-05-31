@@ -90,9 +90,10 @@ public class Player_Sprint_Crouch : MonoBehaviour
                 player_Footsteps.step_Distance = walk_step_Distance;
                 player_Footsteps.volume_Min = walk_Volume_Min;
                 player_Footsteps.volume_Max = walk_Volume_Max;
-            }
+            } // if stamina is 0, player is stoped from running
+
             player_Stats.DisplayStaminaStats(sprint_Value);
-        }
+        } // drown stamina
         else
         {
             if(sprint_Value != 100f)
@@ -103,8 +104,9 @@ public class Player_Sprint_Crouch : MonoBehaviour
                 if (sprint_Value > 100f)
                 {
                     sprint_Value = 100f;
-                }
-            }
+                } // cap stamina at 100f
+
+            } // start regenerating stamina
         }
 
     }//sprint function

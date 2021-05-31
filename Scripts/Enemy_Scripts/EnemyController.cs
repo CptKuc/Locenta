@@ -30,7 +30,7 @@ public class EnemyController : MonoBehaviour
 
     public float patrol_Radius_Min = 20f, patrol_Radiu_Max = 60f;
     public float patrol_For_This_Time = 15f;
-    public float stay_Fot_This_Time = 10f;
+    public float stay_For_This_Time = 10f;
     public float patrol_Timer;
     //public float wait_Before_Attack = 2f;
     protected float attack_Timer;
@@ -89,15 +89,18 @@ public class EnemyController : MonoBehaviour
 
     public void Sound_Notify(Vector3 sound_Position, float sound_Distance)
     {
-        if (Vector3.Distance(transform.position, sound_Position) < sound_Distance)
+        if (Vector3.Distance(transform.position, sound_Position) < sound_Distance
+            && enemy_State != EnemyState.CHASE && enemy_State != EnemyState.ATTACK)
         {
             temporar_Destination = sound_Position;
             enemy_State = EnemyState.GO_TO_SOUND;
         }
-    }
+    } // notify the enemy of the possition of hte sound
 
     void Go_To_Sound_Position(Vector3 sound_Position)
     {
+        stay_For_This_Time = 1f;
+        patrol_For_This_Time = 6f;
         nav_Agent.isStopped = false;
         nav_Agent.speed = going_Speed;
         nav_Agent.SetDestination(sound_Position);
@@ -139,7 +142,7 @@ public class EnemyController : MonoBehaviour
         nav_Agent.speed = walk_Speed;
         patrol_Timer += Time.deltaTime;
 
-        if (patrol_Timer < stay_Fot_This_Time)
+        if (patrol_Timer < stay_For_This_Time)
         {
             nav_Agent.isStopped = true;
         }
@@ -171,6 +174,8 @@ public class EnemyController : MonoBehaviour
 
     void Chase()
     {
+        stay_For_This_Time = 1f;
+        patrol_For_This_Time = 6f;
         nav_Agent.isStopped = false;
         nav_Agent.speed = run_Speed;
         nav_Agent.SetDestination(target.position);
@@ -214,16 +219,6 @@ public class EnemyController : MonoBehaviour
     {
         nav_Agent.velocity = Vector3.zero;
         nav_Agent.isStopped = true;
-
-        /*attack_Timer += Time.deltaTime;
-        if (attack_Timer > wait_Before_Attack)
-        {
-            enemy_Anim.Attack();
-            attack_Timer = 0f;
-
-            //play attack sound
-            enemy_Audio.PlayAttackSound();
-        }*/
 
         enemy_Anim.Attack();
 

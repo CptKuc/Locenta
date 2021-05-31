@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+// Script for rotating the camera in Main Menu.
 public class Camera_Script : MonoBehaviour
 {
     private float x, y;
@@ -19,5 +20,5 @@ public class Camera_Script : MonoBehaviour
         x += rotation_SpeedX * Time.deltaTime;
         y += rotation_SpeedY * Time.deltaTime;
         transform.rotation = Quaternion.Euler(x, y, 0);
-    }
+    } // Updates the values for rotation parameter
 }

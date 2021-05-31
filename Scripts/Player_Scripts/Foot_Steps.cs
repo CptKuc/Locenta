@@ -44,7 +44,8 @@ public class Foot_Steps : MonoBehaviour
             if (footsteps_Sound.volume >= 0.1f)
             {
                 player.GetComponent<Enemy_Notifier>().Notify(transform.position, 20f);
-            }
+            } // notify only when the volume is high enough
+
         }
 
         if ((Input.GetKeyDown(KeyCode.W) || 
@@ -58,16 +59,20 @@ public class Foot_Steps : MonoBehaviour
             if (footsteps_Sound.volume >= 0.1f)
             {
                 player.GetComponent<Enemy_Notifier>().Notify(transform.position, 20f);
-            }
-        }
+            } // notify only when the volume is high enough
+
+        } // play sound for footsteps when pressing on one of the direction keys
 
         if (!character_Controllor.isGrounded)
         {
             return;
-        }
+        } // do not do enything when the character is grounded
+
         if (character_Controllor.velocity.sqrMagnitude > 0)
         {
             accumulated_Distance += Time.deltaTime;
+            // accumulated_Distance is used to determin when to play the footstep sound
+
             if(accumulated_Distance > step_Distance)
             {
                 footsteps_Sound.volume = Random.Range(volume_Min, volume_Max);
@@ -76,10 +81,10 @@ public class Foot_Steps : MonoBehaviour
                 if (footsteps_Sound.volume >= 0.1f)
                 {
                     player.GetComponent<Enemy_Notifier>().Notify(transform.position, 20f);
-                }
+                } // notify only when the volume is high enough
 
                 accumulated_Distance = 0;
-            }
+            } // play sound when the accumulated distance is high enough
         }
         else
         {

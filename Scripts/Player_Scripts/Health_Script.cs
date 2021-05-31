@@ -28,17 +28,15 @@ public class Health_Script : MonoBehaviour
             enemy_Anim = GetComponent<EnemyAnimator>();
             enemy_Controller = GetComponent<EnemyController>();
             nav_Agent = GetComponent<NavMeshAgent>();
-
             enemy_Audio = GetComponentInChildren<Enemy_Audio>();
-            //get enemy audio
-        }
+        } // take components needed for enemy
 
         if (is_Turret)
         {
             turret_Controller = GetComponent<TurretScript>();
             enemy_Audio = GetComponentInChildren<Enemy_Audio>();
-            explosion = gameObject.transform.GetChild(4).gameObject;
-        }
+            explosion = gameObject.transform.GetChild(3).gameObject;
+        } // take components needed for turret
 
         if (is_Player)
         {
@@ -68,7 +66,7 @@ public class Health_Script : MonoBehaviour
             {
                 enemy_Controller.chase_Distance = 50000f;
             }
-        }
+        } // damage the enemy and make him go after the player
 
         if(health <= 0)
         {
@@ -81,21 +79,31 @@ public class Health_Script : MonoBehaviour
         if (is_Enemy)
         {
             nav_Agent.velocity = Vector3.zero;
+            // stop the enemy
+
             nav_Agent.isStopped = true;
+            // stop navMeshAgent
+
             enemy_Controller.enabled = false;
+            // deactivate controller
+
             enemy_Anim.Dead();
+            // play animation
             
             StartCoroutine(DeadSound());
-        }
+
+        } // kill an enemy
 
         if (is_Turret)
         {
             turret_Controller.enabled = false;
+            // stop the turret from doing enything
         }
 
         if (is_Player)
         {
             GameObject[] enemies = GameObject.FindGameObjectsWithTag(Tags.ENEMY_TAG);
+            // make vector with all enemies and turrets
 
             for (int i = 0; i < enemies.Length; i++)
             {
@@ -103,46 +111,60 @@ public class Health_Script : MonoBehaviour
                 {
                     enemies[i].GetComponent<EnemyController>().enabled = false;
                     enemies[i].GetComponentInChildren<AudioSource>().enabled = false;
-                }
+                } // dissable enemies
+
                 if (is_Turret)
                 {
                     enemies[i].GetComponent<TurretScript>().enabled = false;
                     enemies[i].GetComponentInChildren<AudioSource>().enabled = false;
-                }
-            }
+                } // disable turrets
 
-            // call enemy manager
+            } // deactivate all enemies
 
             GetComponent<Player_Movement>().enabled = false;
             GetComponent<Player_Attack>().enabled = false;
             GetComponent<WeaponManager>().GetCurrentSelectedWeapon().gameObject.SetActive(false);
+            // stop player functions and deactivate weapon
+
         }
 
         if (tag == Tags.PLAYER_TAG)
         {
             Invoke("RestartGame", 3f);
-        }
+        } // restart the game
+
         else if (is_Enemy)
         {
             Invoke("TurnOffGameObject", 5f);
-        }
+        } // make enemy disapear
+
+
         else if (is_Turret)
         {
-            Invoke("Explosion", 3f);
-            Invoke("TurnOffGameObject", 7f);
-        }
+            Invoke("Explosion", 1f);
+            Invoke("TurnOffGameObject", 4f);
+        } // make turret explode and disapear
     }
 
     void Explosion()
     {
         explosion.SetActive(true);
-        gameObject.GetComponent<Enemy_Notifier>().TurretNotifyer(transform.position, 400f);
+        // start turret explosion
+
+        gameObject.GetComponent<Enemy_Notifier>().TurretNotifyer(transform.position, 100f);
+        // notify all enemies in 100 radius
+
+        gameObject.transform.GetChild(1).gameObject.GetComponent<Renderer>().enabled = false;
+        // deactivate turret render
+
+        gameObject.transform.GetChild(2).gameObject.SetActive(false);
+        // deactivate turret sound
     }
 
     void RestartGame()
     {
         UnityEngine.SceneManagement.SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    } // restart game by reloading the current scene
 
     void TurnOffGameObject()
     {

@@ -31,6 +31,7 @@ public class Mouse_Look : MonoBehaviour
 
     [SerializeField]
     private Vector2 default_look_Limits = new Vector2(-70f, 80f);
+    // Limits for vertical camera rotation
 
     private Vector2 look_Angles;
     private Vector2 current_Mouse_Look;
@@ -80,7 +81,7 @@ public class Mouse_Look : MonoBehaviour
                 ResumeGame();
             }
         }
-    }
+    } // Method for pausing the game when press ESC
 
     void LookAround()
     {
@@ -91,20 +92,20 @@ public class Mouse_Look : MonoBehaviour
         look_Angles.y += current_Mouse_Look.y * sensivity;
 
         look_Angles.x = Mathf.Clamp(look_Angles.x, default_look_Limits.x, default_look_Limits.y);
-
-        //current_roll_Angle =
-        //    Mathf.Lerp(current_roll_Angle, Input.GetAxisRaw(MouseAxis.MOUSE_X)
-        //                * roll_Angle, Time.deltaTime * roll_Speed);
+        // Make vertical rotation to have limits
 
         lookRoot.localRotation = Quaternion.Euler(look_Angles.x, 0f, 0f);
+        // Rotate looRoot on vertical
+
         playerRoot.localRotation = Quaternion.Euler(0f, look_Angles.y, 0f);
-    }
+        // Rotate player on horizontal
+    } // Method for rotating camera when movind mouse
 
     public void PauseGame()
     {
         Time.timeScale = 0;
         menu.SetActive(true);
-    }
+    } // Stops game and activates menu canvas
 
     public void ResumeGame()
     {
@@ -112,5 +113,5 @@ public class Mouse_Look : MonoBehaviour
         menu.SetActive(false);
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-    }
+    } // Start game and make menu disapear
 }

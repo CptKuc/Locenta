@@ -39,11 +39,12 @@ public class ButtonScript : MonoBehaviour
         if (isPressed)
         {
             PressButton();
-        }
+        } // Activate method for pressing the button
+
         if (isOpen)
         {
             GetComponentInParent<GateScript>().Open();
-        }
+        } // Call method for opening the door
     }
 
     void Ray()
@@ -52,18 +53,22 @@ public class ButtonScript : MonoBehaviour
         if (Physics.Raycast(mainCam.transform.position, mainCam.transform.forward, out hit)
             && Vector3.Distance(transform.position, player.transform.position) < interaction_Distance)
         {
-            print(hit);
+            //print(hit);
             text_Window.SetActive(true);
+            // Activate the box with "Press E" text
             if (Input.GetKeyDown(KeyCode.E))
             {
                 isPressed = true;
+
                 gameObject.GetComponent<AudioSource>().Stop();
+                // Stop the sound created by he button
+                // Stop the sound created by he button
             }
         }
         else
         {
             text_Window.SetActive(false);
-        }
+        } // Remove the "Press E" window
     }
 
     void PressButton()
@@ -74,20 +79,25 @@ public class ButtonScript : MonoBehaviour
             gameObject.transform.Translate(Vector3.down * Time.deltaTime * 2);
             pres.transform.Translate(Vector3.up * Time.deltaTime * 2);
             current_Down_Time += Time.deltaTime;
+
             pres.GetComponent<AudioSource>().Play();
-        }
+            // Play the sound for pressing the button
+
+        } // Move the red part down, keep the pad in place
+
         else if (current_Up_Time < up_Time)
         {
             gameObject.transform.Translate(Vector3.up * Time.deltaTime * 2);
             pres.transform.Translate(Vector3.down * Time.deltaTime * 2);
             current_Up_Time += Time.deltaTime;
-        }
+        } // Move the red part up, keep the pad in place
 
         if (current_Down_Time >= down_Time && current_Up_Time >= up_Time)
         {
             current_Down_Time = 0;
             current_Up_Time = 0;
             isPressed = false;
-        }
-    }
+        } // Stops the Botton when it is in the initial position
+
+    } // Method for button pressing animation
 }

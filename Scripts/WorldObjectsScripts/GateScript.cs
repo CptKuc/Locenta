@@ -13,7 +13,7 @@ public class GateScript : MonoBehaviour
     {
         left_Frame = gameObject.transform.GetChild(0).gameObject;
         right_Frame = gameObject.transform.GetChild(1).gameObject;
-    }
+    } // Takes the left and right sides of the gate
     
     public void Open()
     {
@@ -23,5 +23,5 @@ public class GateScript : MonoBehaviour
             right_Frame.transform.Translate(Vector3.back * Time.deltaTime);
             current_Time += Time.deltaTime;
         }
-    }
+    } // Open the gate by moving the left and right sides
 }

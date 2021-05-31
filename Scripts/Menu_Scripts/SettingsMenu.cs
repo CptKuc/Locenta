@@ -29,31 +29,37 @@ public class SettingsMenu : MonoBehaviour
             {
                 current_Res_Index = i;
             }
-        }
+        } // Create a list with every supported resolution available on the current system
+
         resolutionDropdown.ClearOptions();
         resolutionDropdown.AddOptions(options);
+        // Load the list "options" in the resolution dropdown
+
         resolutionDropdown.value = current_Res_Index;
         resolutionDropdown.RefreshShownValue();
+        // Make the current resolution to be shown in the dropdown
     }
 
     public void SetVolume(float volume)
     {
         audio_Mixer.SetFloat(Tags.VOLUME_TAG, volume);
-    }
+    } // Sets the value for volume in the master of the game mixer
+    // Needs a mixer and all autio sources to have the output device set to it
 
     public void SetQuality(int quality_Index)
     {
         QualitySettings.SetQualityLevel(quality_Index);
-    }
+    } // Sets the quality for the game
+    // Needs various quality levels to be set from Project Settings -> Quality
 
     public void SetScreen(bool fullScreen)
     {
         Screen.fullScreen = fullScreen;
-    }
+    } // Sets screen to full screen
 
     public void SetRes(int res_Index)
     {
         Resolution resolution = resolutions[res_Index];
         Screen.SetResolution(resolution.width, resolution.height, Screen.fullScreen);
-    }
+    } // Sets the resolution of the aplication
 }

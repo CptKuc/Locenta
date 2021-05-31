@@ -59,24 +59,24 @@ public class WeaponHandler : MonoBehaviour
     public void Aim(bool canAim)
     {
         anim.SetBool(AnimationTags.AIM_PARAM, canAim);
-    }
+    } // Start anim for PlasaGun
 
     void Turn_ON_MuzzleFlash()
     {
         muzzle_Flash.SetActive(true);
-    }
+    } // Turn on the muzzle flash for weapons
 
     void Turn_OFF_MuzzleFlash()
     {
         muzzle_Flash.SetActive(false);
-    }
+    } // Turn on the muzzle flash for weapons
 
     void Play_ShootSound()
     {
         shoot_Sound.Play();
-    }
+    } // Play the sound for shooting the weapon
 
-    void Play_ReloadSound()
+/*    void Play_ReloadSound()
     {
         reload_Sound.Play();
     }
@@ -92,6 +92,6 @@ public class WeaponHandler : MonoBehaviour
         {
             attack_Point.SetActive(false);
         }
-    }
+    }*/
 
 }

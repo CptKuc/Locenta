@@ -17,8 +17,10 @@ public class Player_Movement : MonoBehaviour
     private void Awake()
     {
         character_Controller = GetComponent<CharacterController>();
+        //take character controller
 
         player_Footsteps = GetComponentInChildren<Foot_Steps>();
+        //take the component for step sounds
     }
 
     // Update is called once per frame
@@ -38,13 +40,13 @@ public class Player_Movement : MonoBehaviour
         ApplyGravity();
 
         character_Controller.Move(move_Direction);
-    } //move player
+    } //move player wirh W, A, S, D
 
     void ApplyGravity()
     {
         if (character_Controller.isGrounded)
         {
-            vertical_Velocity -= gravity * Time.deltaTime;
+            vertical_Velocity = 0;
             PlayerJump();
         }
         else
@@ -62,5 +64,5 @@ public class Player_Movement : MonoBehaviour
             vertical_Velocity = jumb_Force;
             player_Footsteps.in_Air = true;
         }
-    }
+    } // make player to jump when press space
 }

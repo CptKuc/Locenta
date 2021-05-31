@@ -26,7 +26,7 @@ public class Enemy_Notifier:MonoBehaviour
                 //Debug.Log("Turret notified");
             }
         }
-    }
+    } // notify enemy
 
     public void TurretNotifyer(Vector3 obj_Pos, float notify_Distance)
     {
@@ -47,5 +47,5 @@ public class Enemy_Notifier:MonoBehaviour
                 Debug.Log("Turret");
             }
         }
-    }
+    } // notify enemy when the source is turret
 }

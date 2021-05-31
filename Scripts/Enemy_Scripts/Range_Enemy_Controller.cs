@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+// Controller for ranged enemy
 public class Range_Enemy_Controller : EnemyController
 {
     [SerializeField]
@@ -52,7 +53,7 @@ public class Range_Enemy_Controller : EnemyController
         nav_Agent.speed = walk_Speed;
         patrol_Timer += Time.deltaTime;
 
-        if (patrol_Timer < stay_Fot_This_Time)
+        if (patrol_Timer < stay_For_This_Time)
         {
             nav_Agent.isStopped = true;
         }
@@ -84,6 +85,8 @@ public class Range_Enemy_Controller : EnemyController
 
     void Go_To_Sound_Position(Vector3 sound_Position)
     {
+        stay_For_This_Time = 0f;
+        patrol_For_This_Time = 5f;
         time_Passed += Time.deltaTime;
         if (time_Passed < start_Going)
         {
@@ -137,6 +140,8 @@ public class Range_Enemy_Controller : EnemyController
 
     void Chase()
     {
+        stay_For_This_Time = 0f;
+        patrol_For_This_Time = 5f;
         nav_Agent.isStopped = false;
         nav_Agent.speed = run_Speed;
         nav_Agent.SetDestination(target.position);
